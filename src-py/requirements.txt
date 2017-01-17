@@ -1,0 +1,17 @@
+# Core
+django>=1.9,<1.11
+
+# has commit about accepting access_token at logout, not only JWT
+git+https://github.com/koriaf/django-oidc-provider.git
+
+envparse==0.2.0
+psycopg2==2.6.2
+django-allauth==0.30.0
+django-crispy-forms==1.6.1
+
+# error reporting
+raven==5.32.0
+
+# deployment
+zappa==0.32.1
+django-storages==1.5.2

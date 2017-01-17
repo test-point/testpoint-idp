@@ -1,0 +1,30 @@
+{% extends "pages.html" %}
+{% load i18n %}
+{% load staticfiles %}
+
+{% block head_title %}JWT Tokens for {{ user }}{% endblock %}
+
+{% block content %}
+  <div class="row">
+    <h1>My Tokens</h1>
+    <p>These tokens may be used for access API at any supporting SMP or another service.</p>
+    <form method='post' action='#'>
+      {% csrf_token %}
+      <select name='client'>
+        {% for client in clients %}
+          <option value='{{ client.client_id }}'>{{ client.client_id }} ({{ client.name }})</option>
+        {% endfor %}
+      </select>
+      <button type='submit'>Issue new token for this client</button>
+    </form>
+    <br/>
+    {% for token in tokens %}
+      <fieldset><legend>#{{ token.id }} for {{ token.client }}</legend>
+        <strong>Expires:</strong> {{ token.expires_at }} UTC {% if token.has_expired %}(Expired){% endif %}<br/>
+        <strong>Content:</strong>
+        <pre style='white-space: pre-wrap'>{{ token.content_rendered }}</pre>
+        <strong>Rendered:</strong>
+        <pre style='white-space: pre-wrap'>{{ token.rendered }}</pre>
+    {% endfor %}
+  </div>
+{% endblock %}

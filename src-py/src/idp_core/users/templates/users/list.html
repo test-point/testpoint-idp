@@ -1,0 +1,46 @@
+{% extends "pages.html" %}
+{% load i18n %}
+{% load staticfiles %}
+
+{% block head_title %}My Users{% endblock %}
+
+{% block content %}
+  <div class="row">
+    {% block base_breadcrumbs %}
+      <ul class="breadcrumb">
+        <li><a href="{% url 'users:list' %}">Users</a></li>
+        {% block breadcrumbs %}{% endblock %}
+      </ul>
+    {% endblock %}
+
+    {% block inner_content %}
+      <h1>My Synthetic Users</h1>
+      <p>These users are made to login to any service, which understands extra oAuth data with abn value. Feel free to choice any ABN you like (but not used yet) and never accept SimGuard data for production installations.</p>
+      <h2>User List <a class="btn btn-sm pull-right" href="{% url 'users:create' %}">Add new</a></h2>
+    <div class="text-right"></div>
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Username/ABN</th>
+      </tr>
+      </thead>
+      <tbody>
+      {% for subuser_profile in user.subusers.all %}
+      <tr>
+        <td>{{ subuser_profile.user.id }}</td>
+        <td>
+          <a href="{% url 'users:detail' subuser_profile.user.username %}">{{ subuser_profile.user.username }}</a>
+        </td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="2" class="text-center">Nobody created yet</td>
+      </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    <div class="text-right"><a class='btn btn-sm' href="{% url 'users:create' %}">Add new</a></div>
+    {% endblock %}
+  </div>
+{% endblock %}

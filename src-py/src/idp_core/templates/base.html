@@ -1,0 +1,78 @@
+<!doctype html>
+<html>
+{% load staticfiles %}
+{% load i18n %}
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>{% block head_title %}Testpoint.io OpenID Connect Provider{% endblock %}</title>
+  <meta name="description" content="" />
+  <meta name="keywords" content="" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="{% static 'testpoint/css/style.css' %}">
+  <link rel="icon" type="image/png" href="{% static 'favicon.png' %}" />
+  {% block extra_head %}{% endblock %}
+</head>
+<body class="home">
+  <div class="main-wrapper">
+    <div class="header">
+      <header class="wrapper">
+        <div class="logo">
+          <a href="/" title=""><img src="{% static 'testpoint/images/logo.png' %}" alt="">Testpoint.io</a>
+          <span class="tagline">Identity Provider</span>
+        </div>
+        <nav id="main-nav">
+          {% include "nav.html" with user=request.user %}
+        </nav>
+      </header>
+    </div>
+    
+    <section class="diagram">
+      {% block diagram %}{% endblock %}
+    </section>
+
+    
+
+    <section id="tabs">
+      {% if messages %}
+        {% for message in messages %}
+          <div style='display: block; margin: auto; width: 50%; border: 1px solid silver; padding: 20px;'
+               class="{% if 'error' in message.tags %} red {% else %} {% if 'warning' in message.tags %} amber {% else %} green {% endif %}{% endif %}"
+               >
+            {# Illya, please fix it #}
+            {% if 'safe' in message.tags %} {{ message|safe }}{% else %} {{ message }}{% endif %}
+          </div>
+        {% endfor %}
+      {% endif %}
+
+      {% block container_content %}
+        <div style='margin: auto; width: 800px; display: block'>
+        {% block content %}
+        {% endblock %}
+        </div>
+      {% endblock %}
+    </section>
+  </div>
+
+  <footer class="footer">
+    <a href="http://testpoint.io/" class="logo">
+      <img src="{% static 'testpoint/images/logo.png' %}" alt="">
+      Testpoint.io
+    </a>
+    <br>
+    <br>
+    <p>
+      Free resources to support Ausdigital open standards development
+    </p>
+    <ul class="footer-menu">
+      <li><a href="http://ausdigital.org/">Ausdigital</a></li>
+      <li><a href="https://github.com/ausdigital/">Github</a></li>
+      <li><a href="mailto:hi@ausdigital.org">hi@ausdigital.org</a></li>
+      <li><a href="https://chat.ausdigital.org/">Chat</a></li>
+    </ul>
+    <p class="copyright">Copyright &copy; 2016. All rights reserved</p>
+  </footer>
+  <script src="{% static 'testpoint/js/jquery-1.12.0.min.js' %}"></script>
+  {% block extra_script %}{% endblock %}
+</body>
+</html>

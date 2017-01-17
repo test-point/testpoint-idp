@@ -1,0 +1,59 @@
+{% extends "rp/list.html" %}
+{% load i18n %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+
+{% block head_title %}{{ object.client.name }}{% endblock %}
+
+{% block breadcrumbs %}
+  <li><a href="{% url 'rp:detail' object.id %}">{{ object.client.name }}</a></li>
+{% endblock %}
+
+{% block inner_content %}
+  <h1>{{ object.client.name }}</h1>
+  <p>Here you can view relaying party details.</p>
+  <dl class="dl-horizontal">
+    <dt>Client type:</dt>
+    <dd>{{ object.client.get_client_type_display }}</dd>
+    <dt>Response type:</dt>
+    <dd>{{ object.client.get_response_type_display }}</dd>
+    <dt>JWT algorithm:</dt>
+    <dd>{{ object.client.get_jwt_alg_display }}</dd>
+    <dt>Client ID:</dt>
+    <dd>{{ object.client.client_id }}</dd>
+    <dt>Client secret:</dt>
+    <dd>{{ object.client.client_secret }}</dd>
+    <dt>Redirect URLs:</dt>
+    {% for url in object.client.redirect_uris %}
+      <dd>{{ url }}</dd>
+    {% endfor %}
+  </dl>
+  <hr>
+  <h3>Update party details</h3>
+    {% if form.non_field_errors %}
+      <div class="message bg-danger">{{ form.non_field_errors }}</div>
+    {% endif %}
+    <form class="form-horizontal" method="post" onSubmit="return confirm('Are you sure?');">
+      {% csrf_token %}
+      {% for field in form %}
+        <div class="form-group{% if field.errors %} has-error{% endif %}">
+          <label for="{{ field.auto_id }}" class="control-label col-md-2 requiredField">{{ field.label }}</label>
+          <div class="controls col-md-8">
+            {{ field }}
+            {% if field.help_text %}
+              <p class="help-block text-block">{{ field.help_text|safe }}</p>
+            {% endif %}
+            {% if field.errors %}
+            <p class="help-block">{{ field.errors.as_text }}</p>
+            {% endif %}
+          </div>
+        </div>
+      {% endfor %}
+      <div class="form-group">
+        <div class="col-md-8 col-md-offset-2">
+          <button type="submit" class="btn">Save</button>
+          <button type="submit" name="delete" class="btn">Delete</button>
+        </div>
+      </div>
+    </form>
+{% endblock %}

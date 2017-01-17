@@ -1,0 +1,20 @@
+#!/bin/bash
+
+export IDP_SECRET_KEY="your real key"
+export IDP_DEBUG="True"
+
+# Uncomment for running collectstatic command locally
+# export IDP_STATICFILES_STORAGE="storages.backends.s3boto.S3BotoStorage"
+# export IDP_AWS_STORAGE_BUCKET_NAME="zappa-prod-idp-testpoint-io-static"
+
+# uncomment for using CDN static source
+# export IDP_STATIC_URL="https://d1n7qymlbmppcm.cloudfront.net/"
+
+# uncomment to use remote database
+# export IDP_DB_NAME="databasename"
+# export IDP_DB_HOST="databasehost"
+# export IDP_DB_PORT="5432"
+# export IDP_DB_USERNAME="username"
+# export IDP_DB_PASSWORD="thepassword"
+
+./venv.sh ./src/manage.py $@

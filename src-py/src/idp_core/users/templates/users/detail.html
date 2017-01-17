@@ -1,0 +1,36 @@
+{% extends "users/list.html" %}
+{% load i18n %}
+{% load staticfiles %}
+
+{% block head_title %}User {{ object }}{% endblock %}
+
+{% block breadcrumbs %}
+  <li><a href="{% url 'users:detail' object.username %}">{{ object }}</a></li>
+{% endblock %}
+
+{% block inner_content %}
+  <h1>{{ object }}</h1>
+  <hr>
+  <h3>Change user password</h3>
+  {% if form.non_field_errors %}
+    <div class="message bg-danger">{{ form.non_field_errors }}</div>
+  {% endif %}
+
+  <form class="form-horizontal" method="post" onSubmit="return confirm('Are you sure?');">
+    {% csrf_token %}
+    <div class="row">
+      <div class="form-group">
+        <label for="password" class="control-label col-md-4">New password (leave empty to keep it)</label>
+        <div class="col-md-4">
+          <input id="password" name="password" type="password" class="form-control" value="{{ form.password.value|default:'' }}">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-md-4 col-md-offset-4">
+          <button type="submit" name="save" class="btn">Save</button>
+          <button type="submit" name="delete" class="btn">Delete</button>
+        </div>
+      </div>
+    </div>
+  </form>
+{% endblock %}

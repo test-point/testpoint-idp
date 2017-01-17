@@ -1,0 +1,28 @@
+<ul>
+  {% if user.is_authenticated %}
+    {% if user.business.is_developer %}
+      <li><a href="{% url 'users:list' %}" class="black-text">Users</a></li>
+      <li><a href="{% url 'rp:list' %}" class="black-text">RP</a></li>
+    {% endif %}
+    {% if user.is_superuser %}
+      <li><a href="{% url 'admin:index' %}" class="black-text">Admin panel</a></li>
+    {% else %}
+      <li><a href="{% url 'users:my_token' %}" class="black-text">{{ user.business.get_readable_name }} ({{ user.business.get_role_display }})</a></li>
+    {% endif %}
+    <li><a href="{% url 'account_logout' %}" class="black-text">Logout</a></li>
+  {% else %}
+    <li><a href="{% url 'account_login' %}">Login</a></li>
+  {% endif %}
+  <li>
+    <a href="#" class="has-dropdown">Services</a>
+    <label for="dropdown" class="has-dropdown">Services</label>
+    <input type="checkbox" id="dropdown"/>
+    <ul class="subemnu">
+      <li><a href="http://testpoint.io/lap.html">Test AP</a></li>
+      <li><a href="http://testpoint.io/nry.html">Test NRY</a></li>
+      <li><a href="https://idp.testpoint.io/">Test IDP</a></li>
+      <li><a href="https://dcl.testpoint.io/">Test DCL</a></li>
+      <li><a href="https://dcp.testpoint.io/">Test DCP</a></li>
+    </ul>
+  </li>
+</ul>

@@ -1,0 +1,60 @@
+{% extends "pages.html" %}
+{% load i18n %}
+{% load staticfiles %}
+
+{% block head_title %}My Relaying Parties{% endblock %}
+
+{% block content %}
+  <div class="row">
+    <ul class="breadcrumb">
+      <li><a href="{% url 'rp:list' %}">Relaying Parties</a></li>
+      {% block breadcrumbs %}{% endblock %}
+    </ul>
+
+    {% block inner_content %}
+      <h1>My Relaying Parties</h1>
+      <p>These parties have their secret credentials and may use SimGuard to authenticate users on their endpoints.</p>
+      <h2>Parties List <a class="btn btn-sm pull-right" href="{% url 'rp:create' %}">Add new</a></h2>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Client ID</th>
+            <th>Name</th>
+            <th>JWT algorithm</th>
+            <th>Client type</th>
+            <th>Response type</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for party in user.rps.all %}
+          <tr>
+            <td>
+              {{ party.client.client_id }}
+            </td>
+            <td>
+              <a href="{% url 'rp:detail' party.id %}">
+                {# <i class="tiny material-icons">person_pin</i> #}
+                {{ party.client.name }}
+              </a>
+            </td>
+            <td>
+              {{ party.client.get_jwt_alg_display }}
+            </td>
+            <td>
+              {{ party.client.get_client_type_display }}
+            </td>
+            <td>
+              {{ party.client.get_response_type_display }}
+            </td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="5" class="text-center">Nothing created yet.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <div class="text-right"><a class='btn btn-sm' href="{% url 'rp:create' %}">Add new</a></div>
+    {% endblock %}
+  </div>
+{% endblock %}

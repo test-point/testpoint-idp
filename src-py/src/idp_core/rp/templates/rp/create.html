@@ -1,0 +1,20 @@
+{% extends "rp/list.html" %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+
+{% block head_title %}Create RP{% endblock %}
+
+{% block breadcrumbs %}
+  <li><a href="{% url 'rp:create' %}">Create</a></li>
+{% endblock %}
+
+{% block inner_content %}
+  <h1>Create RP</h1>
+  <p>Username will be equal to ABN; password - any string. ABN must not be taken by someone already.</p>
+
+  <h3>New RP info</h3>
+  {% if form.non_field_errors %}
+    <p class="bg-danger">{{ form.non_field_errors }}</p>
+  {% endif %}
+  {% crispy form %}
+{% endblock %}

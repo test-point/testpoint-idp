@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+{% load staticfiles %}
+{% load i18n %}
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>{% block head_title %}Testpoint.io OpenID Connect Provider{% endblock %}</title>
+  <meta name="description" content="" />
+  <meta name="keywords" content="" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="{% static 'testpoint/css/style.css' %}">
+  {% block extra_head %}{% endblock %}
+</head>
+<body>
+  <div class="main-wrapper">
+    <div class="header">
+      <header class="wrapper">
+        <div class="logo">
+          <a href="/" title=""><img src="{% static 'testpoint/images/logo.png' %}" alt="">Testpoint.io</a>
+          <span class="tagline">Identity Provider</span>
+        </div>
+        <nav id="main-nav">
+          {% include "nav.html" with user=request.user %}
+        </nav>
+      </header>
+    </div>
+
+    <div class="container">
+      <section class="main-content">
+        {% if messages %}
+          <div class="row">
+          {% for message in messages %}
+              <div class="message bg-{% if 'error' in message.tags %}danger{% else %}{% if 'warning' in message.tags %}warning{% else %}success{% endif %}{% endif %}">
+              {% if 'safe' in message.tags %} {{ message|safe }}{% else %} {{ message }}{% endif %}
+            </div>
+          {% endfor %}
+          </div>
+        {% endif %}
+
+        {% block container_content %}
+          {% block content %}
+          {% endblock %}
+        {% endblock %}
+      </section>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <a href="/" class="logo">
+      <img src="{% static 'testpoint/images/logo.png' %}" alt="">
+      Testpoint.io
+    </a>
+    <ul class="footer-menu">
+      <li><a href="#">Contact Us</a></li>
+      <li><a href="#">Rate Us</a></li>
+      <li><a href="#">Terms &amp; Conditions</a></li>
+      <li><a href="#">Security &amp; Privacy</a></li>
+    </ul>
+    <p class="copyright">Copyright &copy; 2016. All rights reserved</p>
+  </footer>
+  {% block extra_script %}{% endblock %}
+</body>
+</html>

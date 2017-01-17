@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load staticfiles %}
+
+{% block diagram %}
+  <div class="wrapper">
+    <h1 id="free-restful-test-end-points-for-integrated-b2b-communities">A Testpoint.io identity provider test service</h1>
+    <p>B2B frameworks may leverage multiple providers of identity with varying degrees of identity confidence, The higher the identity integrity, the lower the rist associated with B2B transactions and the lower the cost of services such as trade financing. This test service simulates various OIDC providers and scopes.</p>
+    <p><img src="{% static 'test-idp.png' %}" alt="alt text" /></p>
+  </div>
+{% endblock %}
+
+{% block content_header %}{% endblock %}
+
+{% block container_content %}
+  <h2>AVAILABLE IODC IDP TEST RESOURCES</h2>
+  <div class="tabs-wrapper">
+    <div class="tabs">
+      <ul class="tabs-header">
+        <li><a href="#home-tabs-identity">Identity</a></li>
+        <li><a href="#home-tabs-relying-party">Relying Party</a></li>
+        <li><a href="#home-tabs-support">Support</a></li>
+      </ul>
+      <div class="tabs-container">
+
+        <div id="home-tabs-identity" class="tabs-content">
+          <h3>Manage Identities</h3>
+          <p>Claim an Identity (eg an ABN) and generate authentication keys. You can then use this identity for subsequent tests</p>
+          <p>
+            There are two ways to interact with the IDP service.
+            Authenticating directly to the IDP with GitHub credentials will give you developer access.
+            With developer access, you can manage your own collection of ABN accounts for testing purposes.
+          </p>
+          <div>
+            Instructions:
+            <ol>
+              <li>Login with Github</li>
+              <li>Create synthetic user with any free abn (pick ABN you like at dcp.testpoint.io business search page)</li>
+              <li>Logout with Github</li>
+              <li>Go to any supporting service (e.g. <a href="https://dcp.testpoint.io/">Testpoint DCP</a>) and try login with idp.testpoint.io</li>
+              <li>Enter your ABN and password (which doesn't have to be very secure) at login form</li>
+              <li>Enjoy accessing the supporting service (e.g. DCP) as the synthetic business user</li>
+            </ol>
+            <p>After you logged in on this website you can click your synthetic username in top menu and get or generate your own OIDC token (check "Rendered" version). While you possess this token and it's not expired yet you can use it to authenticate on any supporting API installation. Please reffer specific API documentation or examples about how to use this token in this case. Usually it's like:</p>
+<pre>export IDP_AUTH="JWT {YOUR-TOKEN-HERE}"
+curl -v -X GET --header 'Content-Type: application/json' \
+    --header 'Accept: application/json; indent=4' \
+    --header "Authorization: ${IDP_AUTH}" \
+    'https://dcp.testpoint.io/api/v0/demo_auth'
+</pre>
+          </div>
+        </div>
+
+        <div id="home-tabs-relying-party" class="tabs-content">
+          <h3>Relying Party</h3>
+          <p>
+            The Testpoint IDP is a standards compliant OICD Identity Provider.
+            In adition to using it to authenticate and authorise synthetic ABN users against Testpoint services, you can also register your own services (OIDC Relying Parties).
+            This way, it can be used to support development of arbitrary services requiring consent-based access to ABN identities.
+          </p>
+          <div>
+            Instructions:
+            <ul>
+              <li>Login to the IDP client with GitHub</li>
+              <li>Create your RP client using the web interface</li>
+              <li>Record the client id and client secret issued by the IDP</li>
+              <li>Configure your service (OIDC client) to use the credentials provided</li>
+                </ul>
+          </div>
+        </div>
+
+        <div id="home-tabs-support" class="tabs-content">
+          <h3>Support</h3>
+          <p>
+            Say hello in the <a href="https://ausdigital.org">AusDigital</a> Development Special Interest Group.
+            That's the 'SIG Development' channel on the <a href="https://chat.ausdigital.org/">chat server</a>.
+            We'd be happy to help you out, and would love to hear about how you are using the IDP.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block content %}       
+   <div class="row">
+    <div class="col s12 m10 offset-m1">
+      <div class="card hoverable">
+        <div class="card-content">
+          <h1 class="center-align flow-text indigo-text text-lighten-1">Example of an OpenID Connect 1.0 Provider. Built with the <a href="https://www.djangoproject.com/" target="_BLANK"><u>Django Framework</u></a> and <a href="https://github.com/juanifioren/django-oidc-provider" target="_BLANK"><u>django-oidc-provider</u></a> package.</h1>
+          {% comment %}
+          <p class="flow-text">Start by creating your clients <a href="{% url 'admin:index' %}oidc_provider/client/">here</a>.</p>
+          <p class="flow-text">Also check that you've created at least one server key, do it <a href="{% url 'admin:index' %}oidc_provider/rsakey/">here</a>.</p>
+          {% endcomment %}
+          {% if user.business.extra_data %}
+            <div class="flow-text">
+              Data will be passed as extra user profile:
+              <pre style='white-space: pre-wrap;'>{{ user.business.extra_data }}</pre>
+            </div>
+          {% endif %}
+          <div class="collection with-header">
+            <div class="collection-header"><h4>Server Endpoints</h4></div>
+            <a href="{% url 'oidc_provider:provider_info' %}" class="collection-item indigo-text text-lighten-1">{% url 'oidc_provider:provider_info' %}</a>
+            <a href="{% url 'oidc_provider:jwks' %}" class="collection-item indigo-text text-lighten-1">{% url 'oidc_provider:jwks' %}</a>
+            <a href="{% url 'oidc_provider:authorize' %}" class="collection-item indigo-text text-lighten-1">{% url 'oidc_provider:authorize' %}</a>
+            <a href="{% url 'oidc_provider:token' %}" class="collection-item indigo-text text-lighten-1">{% url 'oidc_provider:token' %}</a>
+            <a href="{% url 'oidc_provider:userinfo' %}" class="collection-item indigo-text text-lighten-1">{% url 'oidc_provider:userinfo' %}</a>
+            <a href="{% url 'oidc_provider:logout' %}" class="collection-item indigo-text text-lighten-1">{% url 'oidc_provider:logout' %}</a>
+          </div>
+        </div>
+      </div>
+    </div>
+{% endblock %}
+{% block extra_script %}
+  <script src="{% static 'testpoint/js/jquery.responsiveTabs.min.js' %}"></script>
+  <script>
+    jQuery(document).ready(function ($) {
+      $('.tabs').responsiveTabs({
+        collapsible: 'false',
+        active: 0,
+        startCollapsed: false,
+        scrollToAccordion: true,
+        setHash: true,
+        scrollToAccordionOffset: 500
+      });
+    });
+  </script>
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends "account/base.html" %}
+
+{% load i18n %}
+{% load account socialaccount %}
+
+{% block head_title %}{% trans "Sign In" %}{% endblock %}
+
+{% block content %}
+
+<h1>{% trans "Sign In" %}</h1>
+
+{% get_providers as socialaccount_providers %}
+
+<div class="col-lg-7 col-md-9 col-sm-10 col-centered">
+  {% if socialaccount_providers %}
+    <p>{% blocktrans with site.name as site_name %}Please sign in with one of your existing third party accounts. Or sign in below:{% endblocktrans %}</p>
+      <ul class="login-provider-list">
+        {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+      </ul>
+    {% include "socialaccount/snippets/login_extra.html" %}
+    <div class="or-delimiter">{% trans 'or' %}</div>
+  {% else %}
+      <p>{% blocktrans %}If you have not created an account yet, then please <a href="{{ signup_url }}">sign up</a> first.{% endblocktrans %}</p>
+  {% endif %}
+  <form method="POST" action="{% url 'account_login' %}">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+    <div class="form-group{% if form.login.errors %} has-error{% endif %}">
+      <label for="{{ form.login.id_for_label }}" class="control-label">{{form.login.label}}</label>
+      <div>
+        <input id="{{ form.login.id_for_label }}" type="text" name="{{ form.login.name }}" class="form-control" value="{{ form.login.value|default:'' }}">
+        {% if form.login.errors %}
+        <span class="help-block">{{ form.login.errors.as_text }}</span>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="form-group{% if form.password.errors %} has-error{% endif %}">
+      <label for="{{ form.login.id_for_label }}" class="control-label">{{form.password.label}}</label>
+      <input id="{{ form.password.id_for_label }}" type="password" name="{{ form.password.name }}" class="form-control" value="{{ form.password.value|default:'' }}">
+      {% if form.password.errors %}
+      <span class="help-block">{{ form.password.errors.as_text }}</span>
+      {% endif %}
+    </div>
+
+    <div class="form-group clearfix">
+      <div>
+        <div class="pull-left">
+          <label for="{{ form.remember.id_for_label }}">{{ form.remember }} {{form.remember.label}}</label>
+        </div>
+        <a class="pull-right" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <button class="btn" type="submit">{% trans "Sign In" %}</button>
+    </div>
+
+    {% if redirect_field_value %}
+      <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+    {% endif %}
+  </form>
+</div>
+{% endblock %}
