@@ -48,6 +48,7 @@ class MyTokenView(TemplateView):
             request=None,
             scope=recent_token.scope,
         )
+        id_token_dic.update(request.user.business.get_extra_data())
         recent_token.id_token = id_token_dic
         recent_token.save()
         return redirect(request.path_info)

@@ -11,9 +11,9 @@ class AbnScopeClaims(ScopeClaims):
     """
 
     def create_response_dic(self):
+        extra_data = {}
         try:
-            extra_data = self.user.business.get_extra_data()
-            return extra_data
+            extra_data.update(self.user.business.get_extra_data())
         except Exception as e:
             logging.exception(e)
-            return {}
+        return extra_data

@@ -34,11 +34,14 @@ class BusinessProfile(models.Model):
         return
 
     def get_extra_data(self):
+        extra_data = {}
         try:
-            return json.loads(self.extra_data)
+            extra_data.update(json.loads(self.extra_data))
         except Exception as e:
             logging.exception(e)
-            return {}
+        if 'abn' not in extra_data and self.parent_user_id is not None:
+            extra_data['abn'] = self.user.username
+        return extra_data
 
     def get_role_display(self):
         if self.user.is_superuser or self.user.is_staff:
