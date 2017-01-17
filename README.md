@@ -1,4 +1,4 @@
-# Identity Provider reference implementation and test suite
+# The Ausdigital Identity Provider reference implementation and test suite
 
 
 See specification at https://github.com/ausdigital/ausdigital-idp
