@@ -1,4 +1,6 @@
 from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
+from allauth.account.adapter import DefaultAccountAdapter
+from django.core.urlresolvers import reverse
 
 
 class OurAllauthSocialAdapter(DefaultSocialAccountAdapter):
@@ -14,6 +16,15 @@ class OurAllauthSocialAdapter(DefaultSocialAccountAdapter):
             sociallogin.account.uid,
         )
         return user
+
+
+class OurAllauthAdapter(DefaultAccountAdapter):
+
+    def get_login_redirect_url(self, request):
+        if request.user.business.is_developer:
+            return reverse('users:list')
+        else:
+            return reverse('users:my_token')
 
 
 def user_email_display(user):

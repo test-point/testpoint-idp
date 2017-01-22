@@ -3,9 +3,6 @@
     {% if user.business.is_developer %}
       <li><a href="{% url 'users:list' %}" class="black-text">Users</a></li>
       <li><a href="{% url 'rp:list' %}" class="black-text">RP</a></li>
-    {% endif %}
-    {% if user.is_superuser %}
-      <li><a href="{% url 'admin:index' %}" class="black-text">Admin panel</a></li>
     {% else %}
       <li><a href="{% url 'users:my_token' %}" class="black-text">{{ user.business.get_readable_name }} ({{ user.business.get_role_display }})</a></li>
     {% endif %}

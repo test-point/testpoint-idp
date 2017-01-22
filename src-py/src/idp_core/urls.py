@@ -2,12 +2,14 @@
 import oidc_provider
 from django.conf.urls import include, url
 from django.contrib import admin
-from django.views.generic import TemplateView, RedirectView
+from django.views.generic import RedirectView
 
+from .views import HomeRedirectView
 
 urlpatterns = [
-    url(r'^$', TemplateView.as_view(template_name='home.html'), name='home'),
+    url(r'^$', HomeRedirectView.as_view(), name='home'),
     url(r'^allauth/signup/$', RedirectView.as_view(url='/')),
+    url(r'^login/$', RedirectView.as_view(url='/allauth/login/')),
     url(r'^allauth/', include('allauth.urls')),
     url(r'^users/', include('idp_core.users.urls', namespace='users')),
     url(r'^rp/', include('idp_core.rp.urls', namespace='rp')),
