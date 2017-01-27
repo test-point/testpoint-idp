@@ -28,6 +28,12 @@ class SubUserCreateForm(forms.Form):
 
     def clean_abn(self):
         value = self.cleaned_data.get('abn')
+        try:
+            int(value)
+            if value <= 0:
+                raise Exception("Negative ABN value")
+        except Exception:
+            raise forms.ValidationError("ABN is usually a positive number (like 27746623856)")
         busy_users = get_user_model().objects.filter(
             username=value
         ).exists()
