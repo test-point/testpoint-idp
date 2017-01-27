@@ -17,6 +17,9 @@ class OurAllauthSocialAdapter(DefaultSocialAccountAdapter):
         )
         return user
 
+    def send_mail(self, *args, **kwargs):
+        pass
+
 
 class OurAllauthAdapter(DefaultAccountAdapter):
 
@@ -25,6 +28,9 @@ class OurAllauthAdapter(DefaultAccountAdapter):
             return reverse('users:list')
         else:
             return reverse('users:my_token')
+
+    def send_mail(self, *args, **kwargs):
+        pass
 
 
 def user_email_display(user):

@@ -103,6 +103,7 @@ ACCOUNT_LOGOUT_ON_GET = True
 ACCOUNT_ADAPTER = 'idp_core.users.adapters.OurAllauthAdapter'
 SOCIALACCOUNT_ADAPTER = 'idp_core.users.adapters.OurAllauthSocialAdapter'
 ACCOUNT_USER_DISPLAY = 'idp_core.users.adapters.user_email_display'
+ACCOUNT_EMAIL_VERIFICATION = 'none'
 
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
