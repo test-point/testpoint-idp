@@ -38,7 +38,7 @@ class SubUserCreateForm(forms.Form):
             username=value
         ).exists()
         if busy_users:
-            raise forms.ValidationError('Sorry, this ABN already busy')
+            raise forms.ValidationError('Sorry, this ABN is already busy. Please pick up another one.')
         return value
 
     def clean_password(self):

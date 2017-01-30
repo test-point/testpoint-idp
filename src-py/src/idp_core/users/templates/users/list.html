@@ -15,7 +15,7 @@
 
     {% block inner_content %}
       <h1>My Synthetic Users</h1>
-      <p>These users are made to login to any service, which understands extra oAuth data with abn value. Feel free to choice any ABN you like (but not used yet) and never accept SimGuard data for production installations.</p>
+      <p>These users are made to login to any service which accepts idp.testpoint.io as an identity provider. Username will be added to extra_claims as ABN value. Feel free to choose any ABN you like (but not used yet) and never accept *.testpoint.io data for production installations.</p>
       <h2>User List <a class="btn btn-sm pull-right" href="{% url 'users:create' %}">Add new</a></h2>
     <div class="text-right"></div>
     <table class="table table-striped">

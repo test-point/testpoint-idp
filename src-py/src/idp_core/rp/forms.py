@@ -8,15 +8,16 @@ from oidc_provider.models import Client
 from .models import RpInfo
 
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Field, Fieldset, ButtonHolder, Submit
-from crispy_forms.bootstrap import AppendedText, PrependedText, FormActions
+from crispy_forms.layout import Submit
 
 
 class RpForm(forms.ModelForm):
 
     class Meta:
         model = Client
-        exclude = ('client_id', 'client_secret')
+        fields = (
+            'name', 'client_type', 'response_type', 'jwt_alg', '_redirect_uris'
+        )
 
     helper = FormHelper()
     helper.form_class = 'form-horizontal'

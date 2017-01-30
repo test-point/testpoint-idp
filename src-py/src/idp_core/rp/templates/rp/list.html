@@ -13,7 +13,7 @@
 
     {% block inner_content %}
       <h1>My Relaying Parties</h1>
-      <p>These parties have their secret credentials and may use SimGuard to authenticate users on their endpoints.</p>
+      <p>These parties have their secret credentials and may use idp.testpoint.io to authenticate users on their endpoints. Please note any party shall accept JWT tokens from idp.testpoint.io and idp.testpoint.io shall be configured as OIDC provider.</p>
       <h2>Parties List <a class="btn btn-sm pull-right" href="{% url 'rp:create' %}">Add new</a></h2>
       <table class="table table-striped">
         <thead>
