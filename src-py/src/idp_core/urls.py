@@ -1,16 +1,17 @@
 # from django.contrib.auth import views as auth_views
 import oidc_provider
+from allauth.account import views as allauth_account_views
 from django.conf.urls import include, url
 from django.contrib import admin
-from django.views.generic import RedirectView
 
 from .views import HomeRedirectView
 
 urlpatterns = [
     url(r'^$', HomeRedirectView.as_view(), name='home'),
-    url(r'^allauth/signup/$', RedirectView.as_view(url='/')),
-    url(r'^login/$', RedirectView.as_view(url='/allauth/login/')),
-    url(r'^allauth/', include('allauth.urls')),
+
+    url(r'^login/$', allauth_account_views.login, name='account_login'),
+    url(r'^allauth/', include('idp_core.fake_allauth_urls')),
+
     url(r'^users/', include('idp_core.users.urls', namespace='users')),
     url(r'^rp/', include('idp_core.rp.urls', namespace='rp')),
 

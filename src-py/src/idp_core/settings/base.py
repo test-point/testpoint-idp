@@ -95,11 +95,12 @@ STATICFILES_STORAGE = env(
 )
 
 # Custom settings
-LOGIN_URL = '/allauth/login/'
+LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/'
 ACCOUNT_USERNAME_BLACKLIST = ['admin', 'owner', 'administrator', 'root']
 ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_LOGOUT_ON_GET = True
+ACCOUNT_LOGOUT_REDIRECT_URL = '/login/'
 ACCOUNT_ADAPTER = 'idp_core.users.adapters.OurAllauthAdapter'
 SOCIALACCOUNT_ADAPTER = 'idp_core.users.adapters.OurAllauthSocialAdapter'
 ACCOUNT_USER_DISPLAY = 'idp_core.users.adapters.user_email_display'
