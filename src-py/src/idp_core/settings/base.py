@@ -146,6 +146,7 @@ LOGGING = {
 
 
 OIDC_EXTRA_SCOPE_CLAIMS = 'idp_core.extraclaims.AbnScopeClaims'
+OIDC_IDTOKEN_EXPIRE = int(env("IDP_OIDC_IDTOKEN_EXPIRE", default=60 * 10))
 
 SESSION_COOKIE_NAME = 'idp-testpoint'
 
