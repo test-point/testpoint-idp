@@ -10,12 +10,12 @@
     <p>These tokens may be used for access API at any supporting SMP or another service.</p>
     <form method='post' action='#'>
       {% csrf_token %}
-      <select name='client'>
+      <select name='client' class='form-control' style='color: black; width: 50%; display: inline-block'>
         {% for client in clients %}
-          <option value='{{ client.client_id }}'>{{ client.client_id }} ({{ client.name }})</option>
+          <option value='{{ client.client_id }}' style='color: black'>{{ client.client_id }} ({{ client.name }})</option>
         {% endfor %}
       </select>
-      <button type='submit'>Issue new token for this client</button>
+      <button type='submit' class='btn btn-primary'>Issue new token for this client</button>
     </form>
     <br/>
     {% for token in tokens %}
@@ -26,5 +26,6 @@
         <strong>Rendered:</strong>
         <pre style='white-space: pre-wrap'>{{ token.rendered }}</pre>
     {% endfor %}
+    <p>There are only 15 latest tokens are displayed</p>
   </div>
 {% endblock %}

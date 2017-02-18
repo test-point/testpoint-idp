@@ -1,3 +1,4 @@
+import datetime
 import json
 
 from django.core.urlresolvers import reverse
@@ -25,7 +26,7 @@ class MyTokenView(TemplateView):
         c = super(MyTokenView, self).get_context_data(*args, **kwargs)
         tokens = OIDCToken.objects.filter(
             user=self.request.user
-        ).order_by('-id')[:10]
+        ).order_by('-id')[:15]
         for token in tokens:
             token.rendered = encode_id_token(token.id_token, token.client)
             token.content_rendered = json.dumps(token.id_token)
@@ -50,6 +51,9 @@ class MyTokenView(TemplateView):
         )
         id_token_dic.update(request.user.business.get_extra_data())
         recent_token.id_token = id_token_dic
+        recent_token.expires_at = datetime.datetime.fromtimestamp(
+            id_token_dic.get('exp')
+        )
         recent_token.save()
         return redirect(request.path_info)
 
