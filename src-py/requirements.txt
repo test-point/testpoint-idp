@@ -10,8 +10,8 @@ django-allauth==0.30.0
 django-crispy-forms==1.6.1
 
 # error reporting
-raven==5.32.0
+raven==6.0.0
 
 # deployment
-zappa==0.32.1
-django-storages==1.5.2
+zappa==0.37.0
+# django-storages==1.5.2

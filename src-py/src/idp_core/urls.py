@@ -1,4 +1,3 @@
-# from django.contrib.auth import views as auth_views
 import oidc_provider
 from allauth.account import views as allauth_account_views
 from django.conf.urls import include, url

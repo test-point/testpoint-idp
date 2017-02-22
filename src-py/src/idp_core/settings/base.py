@@ -28,7 +28,7 @@ INSTALLED_APPS = [
     'idp_core.rp',
     'oidc_provider',  # 3rd party Django app
 
-    'storages',  # deployment requirement, may be removed for local and gunicorn-based installations, but useful for zappa and heroku-like
+    # 'storages',  # deployment requirement, may be removed for local and gunicorn-based installations, but useful for zappa and heroku-like
     'crispy_forms',
 
     'allauth',
