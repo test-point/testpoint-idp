@@ -41,8 +41,14 @@ class BusinessProfile(models.Model):
             logging.exception(e)
         if 'abn' not in extra_data and self.parent_user_id is not None:
             extra_data['abn'] = self.user.username
-        if extra_data.get('abn'):
-            extra_data['urn:oasis:names:tc:ebcore:partyid-type:iso6523:0151'] = extra_data.get('abn')
+
+        extra_data['urn:oasis:names:tc:ebcore:partyid-type:iso6523'] = extra_data.get(
+            'urn:oasis:names:tc:ebcore:partyid-type:iso6523',
+            []
+        )
+        extra_data['urn:oasis:names:tc:ebcore:partyid-type:iso6523'].append(
+            {"0151": self.user.username}
+        )
         return extra_data
 
     def get_role_display(self):

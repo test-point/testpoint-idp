@@ -1,4 +1,3 @@
-import datetime
 import json
 
 from django.core.urlresolvers import reverse
@@ -7,8 +6,10 @@ from django.contrib.auth import get_user_model
 from django.http import Http404
 from django.shortcuts import redirect
 from django.views.generic import TemplateView, CreateView, DetailView
-from oidc_provider.models import Token as OIDCToken, Client as OIDCClient
-from oidc_provider.lib.utils.token import create_token, encode_id_token, create_id_token
+from oidc_provider.models import Token as OIDCToken
+from oidc_provider.lib.utils.token import encode_id_token
+
+from idp_core.utils import issue_jwt, get_oidc_client
 
 from .forms import SubUserCreateForm
 
@@ -36,34 +37,12 @@ class MyTokenView(TemplateView):
 
     def post(self, request, *args, **kwargs):
         customer = self.get_clients().get(client_id=request.POST.get('client'))
-        recent_token = create_token(
-            user=request.user,
-            client=customer,
-            scope=["openid"]
-        )
-        id_token_dic = create_id_token(
-            user=request.user,
-            aud=customer.client_id,
-            nonce=None,
-            at_hash=recent_token.at_hash,
-            request=None,
-            scope=recent_token.scope,
-        )
-        id_token_dic.update(request.user.business.get_extra_data())
-        recent_token.id_token = id_token_dic
-        recent_token.expires_at = datetime.datetime.fromtimestamp(
-            id_token_dic.get('exp')
-        )
-        recent_token.save()
+        issue_jwt(request.user, customer)
         return redirect(request.path_info)
 
     def get_clients(self):
         # get clients, global and user-specific only, without private clients for another users
-        return OIDCClient.objects.filter(
-            rpinfo__isnull=True
-        ) | OIDCClient.objects.filter(
-            rpinfo__user=self.request.user.business.parent_user
-        )
+        return get_oidc_client(self.request.user, None)
 
 
 class DeveloperRequiredMixin(object):
