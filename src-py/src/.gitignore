@@ -1,2 +1,2 @@
-deploy.sh
-createsuperuser.sh
+zappa_settings.json
+

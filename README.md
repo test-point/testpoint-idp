@@ -1,6 +1,5 @@
 # The Ausdigital Identity Provider reference implementation and test suite
 
-
 See specification at https://github.com/ausdigital/ausdigital-idp
 
 See demo installation at https://idp.testpoint.io/
