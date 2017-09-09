@@ -40,7 +40,7 @@ INSTALLED_APPS = [
 MIDDLEWARE_CLASSES = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -80,6 +80,15 @@ DATABASES = {
     }
 }
 
+SESSION_COOKIE_NAME = 'idp.testpoint.io'
+SESSION_COOKIE_DOMAIN = SESSION_COOKIE_NAME
+SESSION_COOKIE_SECURE = False  # not DEBUG
+
+CSRF_COOKIE_DOMAIN = SESSION_COOKIE_DOMAIN
+CSRF_COOKIE_HTTPONLY = True
+CSRF_COOKIE_NAME = 'idp-csrftoken'
+CSRF_COOKIE_SECURE = False  # not DEBUG
+
 LANGUAGE_CODE = 'en-au'
 TIME_ZONE = 'UTC'
 USE_I18N = False
@@ -117,6 +126,9 @@ SITE_ID = 1
 SITE_URL = env('IDP_SITE_URL', default='http://127.0.0.1:7500')
 if SITE_URL.endswith('/'):
     SITE_URL = SITE_URL[:-1]
+
+BASE_DOMAIN = SITE_URL
+USE_X_FORWARDED_HOST = True
 
 LOGGING = {
     'version': 1,
