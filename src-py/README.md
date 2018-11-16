@@ -23,14 +23,10 @@ It's handy to use manage.sh script, which will activate the virtualenv and start
 
 ## Docker deployments
 
-TODO: do add some dockerfile.
+First copy env.example to idp-testpoint.env file and alter it. It assumes the remote Postgres installation, but you may alter the dockerfile to create some postgres container there and point to it instead.
 
-It's going to be just django gunicorn deployment with optional NGINX to serve static files.
+Then:
 
-## Zappa deployments
+`docker-compose up`
 
-Project supports standard Zappa flow.
-
-Collectstatic command: `./manage.sh collectstatic --noinput -i sass -i less -i *.json`
-
-If you use zappa you need to host static files somewhere. Feel free to use ours (check where https://idp.testpoint.io takes it) if you want to think about it later and just need a solution.
+This will listen the port mentioned in the docker-compose.yml file (default is 8810) with the service started.
