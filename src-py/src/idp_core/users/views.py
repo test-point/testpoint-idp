@@ -81,10 +81,6 @@ class UserDetailView(DeveloperRequiredMixin, DetailView):
 
     def get_object(self):
         username = self.kwargs['username']
-        try:
-            username = int(username)
-        except (ValueError, TypeError):
-            raise Http404()
         user_model = get_user_model()
         try:
             user = user_model.objects.get(
