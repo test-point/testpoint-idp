@@ -28,7 +28,6 @@ INSTALLED_APPS = [
     'idp_core.rp',
     'oidc_provider',  # 3rd party Django app
 
-    # 'storages',  # deployment requirement, may be removed for local and gunicorn-based installations, but useful for zappa and heroku-like
     'crispy_forms',
 
     'allauth',
@@ -38,6 +37,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE_CLASSES = [
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     # 'django.middleware.csrf.CsrfViewMiddleware',
@@ -98,10 +98,10 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = env('IDP_STATIC_URL', default='/static/')
-STATIC_ROOT = os.path.join(BASE_DIR, '../../var/staticroot/')
+STATIC_ROOT = env('IDP_STATIC_ROOT', default='var/static_root')
 STATICFILES_STORAGE = env(
     "IDP_STATICFILES_STORAGE",
-    default="django.contrib.staticfiles.storage.StaticFilesStorage"
+    default='whitenoise.storage.CompressedManifestStaticFilesStorage'
 )
 
 # Custom settings

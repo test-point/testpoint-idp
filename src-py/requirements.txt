@@ -12,5 +12,10 @@ django-crispy-forms==1.7.2
 # error reporting
 raven==6.9.0
 
-# deployment
-zappa==0.47.1
+# static file serving for Docker
+whitenoise==4.1.1
+
+# Docker-based deployment
+gevent==1.2.1
+gunicorn==19.7.1
+eventlet==0.23.0

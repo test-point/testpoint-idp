@@ -1,5 +1,6 @@
 *~
 inst_*.py
+*.env
 
 # localized helper scripts with machine-specific ENV variables
 manage.sh

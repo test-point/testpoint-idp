@@ -1,0 +1,16 @@
+version: '2'
+services:
+  web:
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: idp-testpoint-image
+    command: /code/src/docker-gunicorn.sh
+    container_name: idp-testpoint
+    # make sure that this file exists
+    env_file: idp-testpoint.env
+    volumes:
+      - ./src:/code/src
+    ports:
+      - "127.0.0.1:8810:8080"
